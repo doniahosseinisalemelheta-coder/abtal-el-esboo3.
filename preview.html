@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أبطال الأسبوع 🏆</title>
+<style>
+  :root{
+    --burgundy:#6f263d;
+    --burgundy-dark:#4d1a2b;
+    --burgundy-soft:#8e4960;
+    --beige:#f4eadb;
+    --cream:#fbf8f3;
+    --white:#fffdf9;
+    --gold:#c5a15a;
+    --text:#3f3034;
+    --muted:#8b777b;
+    --shadow:0 16px 40px rgba(77,26,43,.10);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"Tahoma","Arial",sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 8% 8%, rgba(197,161,90,.10), transparent 22%),
+      radial-gradient(circle at 92% 18%, rgba(111,38,61,.08), transparent 25%),
+      var(--cream);
+    min-height:100vh;
+  }
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:58px 20px 54px;
+    background:linear-gradient(135deg,var(--burgundy-dark),var(--burgundy));
+    color:white;
+    text-align:center;
+    border-radius:0 0 42px 42px;
+    box-shadow:0 18px 45px rgba(77,26,43,.18);
+  }
+  .hero:before,.hero:after{
+    content:"";
+    position:absolute;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:50%;
+    pointer-events:none;
+  }
+  .hero:before{width:330px;height:330px;left:-130px;top:-190px}
+  .hero:after{width:290px;height:290px;right:-120px;bottom:-190px}
+  .trophy{
+    display:inline-grid;
+    place-items:center;
+    width:76px;height:76px;
+    border-radius:24px;
+    background:rgba(255,255,255,.11);
+    border:1px solid rgba(255,255,255,.20);
+    font-size:39px;
+    box-shadow:0 10px 28px rgba(0,0,0,.10);
+    animation:float 3s ease-in-out infinite;
+  }
+  h1{
+    margin:17px 0 10px;
+    font-size:clamp(32px,6vw,58px);
+    letter-spacing:.3px;
+  }
+  .subtitle{
+    margin:0 auto;
+    max-width:680px;
+    font-size:clamp(15px,2.5vw,19px);
+    line-height:1.8;
+    color:#f9eee7;
+  }
+  .gift-note{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:20px;
+    padding:9px 16px;
+    border-radius:999px;
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.16);
+    font-size:13px;
+  }
+  main{
+    width:min(1180px,92%);
+    margin:42px auto 70px;
+  }
+  .section-head{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    gap:18px;
+    margin:0 4px 20px;
+  }
+  .section-title{
+    margin:0;
+    color:var(--burgundy-dark);
+    font-size:clamp(22px,4vw,31px);
+  }
+  .section-desc{
+    margin:6px 0 0;
+    color:var(--muted);
+    font-size:14px;
+  }
+  .count{
+    flex:none;
+    padding:8px 13px;
+    border-radius:999px;
+    background:var(--beige);
+    color:var(--burgundy);
+    font-size:13px;
+    font-weight:700;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+    gap:14px;
+  }
+  .badge{
+    position:relative;
+    border:1px solid rgba(111,38,61,.10);
+    background:rgba(255,253,249,.88);
+    border-radius:22px;
+    padding:18px 14px 16px;
+    min-height:118px;
+    cursor:pointer;
+    text-align:center;
+    color:var(--text);
+    box-shadow:0 7px 20px rgba(77,26,43,.055);
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    opacity:0;
+    transform:translateY(16px);
+    animation:appear .55s ease forwards;
+    overflow:hidden;
+  }
+  .badge:before{
+    content:"";
+    position:absolute;
+    inset:-35px auto auto -30px;
+    width:90px;height:90px;
+    background:radial-gradient(circle,rgba(197,161,90,.15),transparent 68%);
+  }
+  .badge:hover{
+    transform:translateY(-5px);
+    box-shadow:0 16px 32px rgba(77,26,43,.12);
+    border-color:rgba(197,161,90,.50);
+  }
+  .rank{
+    display:inline-grid;
+    place-items:center;
+    width:28px;height:28px;
+    border-radius:50%;
+    background:var(--beige);
+    color:var(--burgundy);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:10px;
+  }
+  .name{
+    display:block;
+    font-size:16px;
+    line-height:1.55;
+    font-weight:700;
+  }
+  .tap{
+    display:block;
+    margin-top:7px;
+    color:var(--muted);
+    font-size:11px;
+  }
+  .divider{
+    height:1px;
+    margin:55px 0 42px;
+    background:linear-gradient(90deg,transparent,rgba(111,38,61,.18),transparent);
+  }
+  footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+    padding:0 20px 34px;
+  }
+  .modal{
+    position:fixed;
+    inset:0;
+    display:none;
+    place-items:center;
+    padding:20px;
+    background:rgba(47,25,32,.52);
+    backdrop-filter:blur(7px);
+    z-index:50;
+  }
+  .modal.show{display:grid}
+  .modal-card{
+    position:relative;
+    width:min(520px,100%);
+    background:var(--white);
+    border-radius:30px;
+    padding:38px 28px 30px;
+    text-align:center;
+    box-shadow:0 30px 90px rgba(0,0,0,.24);
+    animation:pop .35s ease;
+    overflow:hidden;
+  }
+  .modal-card:before{
+    content:"";
+    position:absolute;
+    width:210px;height:210px;
+    border-radius:50%;
+    background:rgba(197,161,90,.10);
+    top:-130px;right:-90px;
+  }
+  .modal-trophy{
+    font-size:48px;
+    animation:float 2.5s ease-in-out infinite;
+  }
+  .modal h2{
+    margin:10px 0 12px;
+    color:var(--burgundy);
+    font-size:26px;
+  }
+  .student-name{
+    color:var(--burgundy-dark);
+  }
+  .message{
+    margin:0 auto;
+    max-width:430px;
+    line-height:2;
+    color:#5d4b50;
+    font-size:16px;
+  }
+  .close{
+    position:absolute;
+    top:14px;left:14px;
+    width:38px;height:38px;
+    border:0;
+    border-radius:50%;
+    background:var(--beige);
+    color:var(--burgundy);
+    font-size:23px;
+    cursor:pointer;
+  }
+  .sparkles span{
+    position:absolute;
+    font-size:18px;
+    animation:confetti 2.4s ease-in-out infinite;
+    opacity:.7;
+  }
+  .sparkles span:nth-child(1){top:20%;left:10%}
+  .sparkles span:nth-child(2){top:15%;right:12%;animation-delay:.4s}
+  .sparkles span:nth-child(3){bottom:18%;left:14%;animation-delay:.8s}
+  .sparkles span:nth-child(4){bottom:14%;right:13%;animation-delay:1.2s}
+
+  @keyframes appear{to{opacity:1;transform:translateY(0)}}
+  @keyframes pop{from{opacity:0;transform:scale(.92) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+  @keyframes float{50%{transform:translateY(-6px)}}
+  @keyframes confetti{50%{transform:translateY(-10px) rotate(12deg);opacity:1}}
+  @media(max-width:560px){
+    .hero{padding:42px 17px 40px;border-radius:0 0 30px 30px}
+    .trophy{width:64px;height:64px;font-size:32px;border-radius:20px}
+    main{width:94%;margin-top:32px}
+    .section-head{align-items:flex-start}
+    .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .badge{min-height:110px;padding:15px 9px}
+    .name{font-size:14px}
+    .section-title{font-size:21px}
+    .modal-card{padding:34px 20px 25px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="trophy">🏆</div>
+  <h1>أبطال الأسبوع</h1>
+  <p class="subtitle">مجهودك النهارده هو خطوة لنجاحك بكرة ♥️</p>
+  <div class="gift-note">🎁 تكريم صغير لأبطال الاستمرار والإنجاز</div>
+</header>
+
+<main>
+  <section>
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">🏆 أبطال الأسبوع – كل المواد</h2>
+        <p class="section-desc">كل اسم هنا وراه مجهود يستحق التقدير ✨</p>
+      </div>
+      <span class="count" id="allCount"></span>
+    </div>
+    <div class="grid" id="allStudents"></div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">🌟 أبطال الأسبوع – المواد الفردية</h2>
+        <p class="section-desc">تميز في مادة أو أكثر… وكل إنجاز يستحق الاحتفال 💛</p>
+      </div>
+      <span class="count" id="individualCount"></span>
+    </div>
+    <div class="grid" id="individualStudents"></div>
+  </section>
+</main>
+
+<footer>استمروا يا أبطال… القادم أجمل بإذن الله ♥️</footer>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <button class="close" id="closeModal" aria-label="إغلاق">×</button>
+    <div class="sparkles" aria-hidden="true">
+      <span>✨</span><span>⭐</span><span>♥️</span><span>✨</span>
+    </div>
+    <div class="modal-trophy">🏆</div>
+    <h2>مبروك يا <span class="student-name" id="modalName"></span>! ♥️</h2>
+    <p class="message">
+      أنا فخورة بمجهودك، وواثقة إننا هنفضل مكملين ونحقق أكتر وأكتر.<br>
+      كمّل يا بطل… أنت قدها! 🌟
+    </p>
+  </div>
+</div>
+
+<script>
+/*
+  ✏️ لتعديل الأسماء:
+  1) أضيفي أو احذفي الاسم من القائمة المناسبة.
+  2) احفظي الملف وافتحيه من جديد.
+  لا تحتاجين لتعديل التصميم أو الـHTML.
+*/
+
+const allStudents = [
+  "ليمار محمد سيد","يوسف علي انور","اسراء كليب","مريم هندام","ميرال محمد",
+  "اياد محمد سلامه","رودينا حسن","ريتاج نبيه","بسنت حسن","مارتينا اشرف",
+  "نور محمد","مسلم رجب","يمني مدحت","محمد العبيدي","انس اسماعيل",
+  "خديجه محمد","شاهندا رمضان","نور محمد","رودينا حسن","محمد عماد"
+];
+
+const individualStudents = [
+  "رنا بيشوي","حبيبه محمود","عبد الرحمن صابر","عمار اسامه","ليان عبد المتعال",
+  "عمر ربيع محمود","عائشه اسامه","وعد وليد","وفاء محمد","زياد كريم",
+  "اسماء نشأت","ايمي عماد","بشاير ابراهيم","ايمان غنيم","رودينا خالد",
+  "جني عادل","ادم وليد","يوسف اشرف","ندي حمدي","اياد ماهر",
+  "مرام بدوي","محمد هيثم","الاء عاطف","رودينا خالد","عمر سعد",
+  "سيف هشام","ريم تامر"
+];
+
+const modal = document.getElementById("modal");
+const modalName = document.getElementById("modalName");
+
+function render(list, targetId, countId){
+  const target = document.getElementById(targetId);
+  document.getElementById(countId).textContent = `${list.length} بطل`;
+
+  list.forEach((name, index) => {
+    const card = document.createElement("button");
+    card.className = "badge";
+    card.style.animationDelay = `${Math.min(index * 45, 900)}ms`;
+    card.innerHTML = `
+      <span class="rank">${index + 1}</span>
+      <span class="name">${name}</span>
+      <span class="tap">اضغط للاحتفال 🎁</span>
+    `;
+    card.addEventListener("click", () => openModal(name));
+    target.appendChild(card);
+  });
+}
+
+function openModal(name){
+  modalName.textContent = name;
+  modal.classList.add("show");
+  modal.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal(){
+  modal.classList.remove("show");
+  modal.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("closeModal").addEventListener("click", closeModal);
+modal.addEventListener("click", e => {
+  if(e.target === modal) closeModal();
+});
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") closeModal();
+});
+
+render(allStudents, "allStudents", "allCount");
+render(individualStudents, "individualStudents", "individualCount");
+</script>
+</body>
+</html>
